@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.dailyweath.core_weather"
+    namespace = "com.dailyweath.feat_network"
     compileSdk = 35
 
     defaultConfig {
@@ -35,6 +35,7 @@ android {
 dependencies {
 
     implementation(project(":network:core-network"))
+    implementation(project(":weather:core-weather"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
