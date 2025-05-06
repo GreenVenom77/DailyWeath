@@ -30,7 +30,7 @@ private fun buildQueryString(params: Map<String, String>): String {
     val queryParams = mutableMapOf<String, String>().apply {
         putAll(params)
 
-        if (BuildConfig.API_KEY.isNotBlank()) {
+        if (BuildConfig.API_KEY.isNotEmpty() && BuildConfig.API_KEY.isNotBlank()) {
             put("key", BuildConfig.API_KEY)
         }
     }
