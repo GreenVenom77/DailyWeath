@@ -1,39 +1,26 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
 }
 
-val localProperties = Properties().apply {
-    load(FileInputStream(rootProject.file("local.properties")))
-}
-
 android {
-    namespace = "com.greenvenom.core_network"
+    namespace = "com.greenvenom.core_weather"
     compileSdk = 35
 
     defaultConfig {
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")}
+        consumerProguardFiles("consumer-rules.pro")
+    }
 
     buildTypes {
-        debug {
-            isMinifyEnabled = false
-            buildConfigField("String", "BASE_URL", "\"${localProperties.getProperty("BASE_URL")}\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY")}\"")
-        }
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"${localProperties.getProperty("BASE_URL")}\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("API_KEY")}\"")
         }
     }
     compileOptions {
@@ -43,15 +30,13 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        buildConfig = true
-    }
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

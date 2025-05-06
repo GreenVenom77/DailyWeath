@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "DailyWeath"
 include(":app")
 include(":network:core-network")
+include(":weather:core-weather")
