@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.greenvenom.core_weather"
+    namespace = "com.dailyweath.core_weather"
     compileSdk = 35
 
     defaultConfig {

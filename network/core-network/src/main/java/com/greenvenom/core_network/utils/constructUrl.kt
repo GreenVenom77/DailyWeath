@@ -5,18 +5,13 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 fun constructUrl(
-    basePath: String,
     pathParams: List<String> = emptyList(),
     queryParams: Map<String, String> = emptyMap()
 ): String {
-    val fullUrl = when {
-        basePath.contains(BuildConfig.BASE_URL) -> basePath
-        basePath.startsWith("/") -> BuildConfig.BASE_URL + basePath.drop(1)
-        else -> BuildConfig.BASE_URL + basePath
-    }
+    val fullUrl = BuildConfig.BASE_URL
 
     val urlWithPath = if (pathParams.isNotEmpty()) {
-        "$fullUrl/${pathParams.joinToString("/") { URLEncoder.encode(it, "UTF-8") }}"
+        "$fullUrl${pathParams.joinToString("/") { URLEncoder.encode(it, "UTF-8") }}"
     } else {
         fullUrl
     }
@@ -35,7 +30,7 @@ private fun buildQueryString(params: Map<String, String>): String {
     val queryParams = mutableMapOf<String, String>().apply {
         putAll(params)
 
-        if (BuildConfig.API_KEY.isNotBlank()) {
+        if (BuildConfig.API_KEY.isNotEmpty() && BuildConfig.API_KEY.isNotBlank()) {
             put("key", BuildConfig.API_KEY)
         }
     }

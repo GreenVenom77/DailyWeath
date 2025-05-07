@@ -23,3 +23,4 @@ rootProject.name = "DailyWeath"
 include(":app")
 include(":network:core-network")
 include(":weather:core-weather")
+include(":network:feat-network")
