@@ -34,6 +34,10 @@ android {
 
 dependencies {
 
+    implementation(project(":weather:core-weather"))
+    implementation(project(":caching:core-caching"))
+    implementation(project(":network:core-network"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

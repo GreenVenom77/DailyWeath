@@ -5,7 +5,7 @@ import com.dailyweath.core_weather.data.entity.DayEntity
 data class Day(
     val id: Int = 0,
     val datetime: String,
-    val tempe: Double,
+    val temp: Double,
     val conditions: String,
     val icon: String,
     val humidity: Double,
@@ -16,7 +16,7 @@ data class Day(
         return DayEntity(
             id = id,
             datetime = datetime,
-            tempe = tempe,
+            tempe = temp,
             conditions = conditions,
             icon = icon,
             humidity = humidity,
