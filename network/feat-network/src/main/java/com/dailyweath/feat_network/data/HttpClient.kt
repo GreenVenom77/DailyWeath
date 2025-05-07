@@ -9,25 +9,21 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class HttpClient {
-    private val executor: Executor = Executors.newCachedThreadPool()
-
-    fun get(fullUrl: String, callback: (HttpResponse) -> Unit) {
-        executor.execute {
-            var connection: HttpURLConnection? = null
-            try {
-                connection = createConnection(fullUrl, "GET")
-                val responseCode = connection.responseCode
-                val responseBody = if (responseCode < 400) {
-                    readStream(connection.inputStream)
-                } else {
-                    readStream(connection.errorStream) ?: ""
-                }
-                callback(HttpResponse(responseCode, responseBody ?: ""))
-            } catch (e: Exception) {
-                callback(HttpResponse(500, "Error: ${e.message}"))
-            } finally {
-                connection?.disconnect()
+    fun get(fullUrl: String): HttpResponse {
+        var connection: HttpURLConnection? = null
+        try {
+            connection = createConnection(fullUrl, "GET")
+            val responseCode = connection.responseCode
+            val responseBody = if (responseCode < 400) {
+                readStream(connection.inputStream)
+            } else {
+                readStream(connection.errorStream) ?: ""
             }
+            return HttpResponse(responseCode, responseBody ?: "")
+        } catch (e: Exception) {
+            return HttpResponse(500, "Error: ${e.message}")
+        } finally {
+            connection?.disconnect()
         }
     }
 
@@ -44,9 +40,6 @@ class HttpClient {
         connection.requestMethod = method
         connection.connectTimeout = 15000
         connection.readTimeout = 15000
-
-        connection.setRequestProperty("Accept", "application/json")
-        connection.setRequestProperty("Content-Type", "application/json")
 
         return connection
     }

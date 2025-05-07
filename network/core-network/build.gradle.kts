@@ -51,6 +51,8 @@ android {
 
 dependencies {
 
+    implementation(project(":weather:core-weather"))
+
     implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)

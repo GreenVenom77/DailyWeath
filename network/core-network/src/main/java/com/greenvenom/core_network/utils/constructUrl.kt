@@ -11,7 +11,7 @@ fun constructUrl(
     val fullUrl = BuildConfig.BASE_URL
 
     val urlWithPath = if (pathParams.isNotEmpty()) {
-        "$fullUrl/${pathParams.joinToString("/") { URLEncoder.encode(it, "UTF-8") }}"
+        "$fullUrl${pathParams.joinToString("/") { URLEncoder.encode(it, "UTF-8") }}"
     } else {
         fullUrl
     }
