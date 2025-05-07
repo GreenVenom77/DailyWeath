@@ -8,5 +8,5 @@ data class DayEntity(
     val icon: String,
     val humidity: Double,
     val windSpeed: Double,
-    val forecastId: Int
+    val forecastId: Int = 0
 )
