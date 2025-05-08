@@ -37,11 +37,20 @@ android {
 
 dependencies {
 
+    implementation(project(":network:core-network"))
+    implementation(project(":network:feat-network"))
+    implementation(project(":caching:core-caching"))
+    implementation(project(":caching:feat-caching"))
+    implementation(project(":weather:core-weather"))
+    implementation(project(":weather:feat-weather"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

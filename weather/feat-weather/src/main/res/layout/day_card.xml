@@ -1,0 +1,48 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Weather Icon -->
+        <ImageView
+            android:id="@+id/iconImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Date -->
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="7 May, 2025"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iconImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Temp + Conditions -->
+        <TextView
+            android:id="@+id/tempConditionsText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="23.5°C - Partly Cloudy"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/dateText"
+            app:layout_constraintTop_toBottomOf="@id/dateText"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

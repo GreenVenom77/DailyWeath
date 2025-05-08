@@ -1,0 +1,91 @@
+package com.dailyweath.core_weather.data.dto.response
+
+import com.dailyweath.core_weather.domain.model.Day
+import org.json.JSONObject
+
+data class DayResponse(
+    val datetime: String = "",
+    val datetimeEpoch: Int = 0,
+    val tempmax: Double = 0.0,
+    val tempmin: Double = 0.0,
+    val temp: Double = 0.0,
+    val feelslikemax: Double = 0.0,
+    val feelslikemin: Double = 0.0,
+    val feelslike: Double = 0.0,
+    val dew: Double = 0.0,
+    val humidity: Double = 0.0,
+    val precip: Double = 0.0,
+    val precipprob: Double = 0.0,
+    val precipcover: Double = 0.0,
+    val preciptype: String? = null,
+    val snow: Double = 0.0,
+    val snowdepth: Double = 0.0,
+    val windgust: Double = 0.0,
+    val windspeed: Double = 0.0,
+    val winddir: Double = 0.0,
+    val pressure: Double = 0.0,
+    val cloudcover: Double = 0.0,
+    val visibility: Double = 0.0,
+    val solarradiation: Double = 0.0,
+    val solarenergy: Double = 0.0,
+    val uvindex: Double = 0.0,
+    val severerisk: Double = 0.0,
+    val sunrise: String = "",
+    val sunriseEpoch: Int = 0,
+    val sunset: String = "",
+    val sunsetEpoch: Int = 0,
+    val moonphase: Double = 0.0,
+    val conditions: String = "",
+    val description: String = "",
+    val icon: String = "",
+    val source: String = "",
+) {
+    fun extractDay(): Day {
+        return Day(
+            datetime = datetime,
+            temp = temp,
+            conditions = conditions,
+            icon = icon,
+            humidity = humidity,
+            windSpeed = windspeed
+        )
+    }
+}
+
+fun JSONObject.toDayResponse() = DayResponse(
+    datetime = this.optString("datetime", ""),
+    datetimeEpoch = this.optInt("datetimeEpoch", 0),
+    tempmax = this.optDouble("tempmax", 0.0),
+    tempmin = this.optDouble("tempmin", 0.0),
+    temp = this.optDouble("temp", 0.0),
+    feelslikemax = this.optDouble("feelslikemax", 0.0),
+    feelslikemin = this.optDouble("feelslikemin", 0.0),
+    feelslike = this.optDouble("feelslike", 0.0),
+    dew = this.optDouble("dew", 0.0),
+    humidity = this.optDouble("humidity", 0.0),
+    precip = this.optDouble("precip", 0.0),
+    precipprob = this.optDouble("precipprob", 0.0),
+    precipcover = this.optDouble("precipcover", 0.0),
+    preciptype = if (this.has("preciptype") && !this.isNull("preciptype")) this.optString("preciptype") else null,
+    snow = this.optDouble("snow", 0.0),
+    snowdepth = this.optDouble("snowdepth", 0.0),
+    windgust = this.optDouble("windgust", 0.0),
+    windspeed = this.optDouble("windspeed", 0.0),
+    winddir = this.optDouble("winddir", 0.0),
+    pressure = this.optDouble("pressure", 0.0),
+    cloudcover = this.optDouble("cloudcover", 0.0),
+    visibility = this.optDouble("visibility", 0.0),
+    solarradiation = this.optDouble("solarradiation", 0.0),
+    solarenergy = this.optDouble("solarenergy", 0.0),
+    uvindex = this.optDouble("uvindex", 0.0),
+    severerisk = this.optDouble("severerisk", 0.0),
+    sunrise = this.optString("sunrise", ""),
+    sunriseEpoch = this.optInt("sunriseEpoch", 0),
+    sunset = this.optString("sunset", ""),
+    sunsetEpoch = this.optInt("sunsetEpoch", 0),
+    moonphase = this.optDouble("moonphase", 0.0),
+    conditions = this.optString("conditions", ""),
+    description = this.optString("description", ""),
+    icon = this.optString("icon", ""),
+    source = this.optString("source", "")
+)

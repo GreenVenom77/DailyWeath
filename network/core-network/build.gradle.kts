@@ -18,7 +18,8 @@ android {
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")}
+        consumerProguardFiles("consumer-rules.pro")
+    }
 
     buildTypes {
         debug {
@@ -49,6 +50,8 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":weather:core-weather"))
 
     implementation(libs.androidx.core.ktx)
 
