@@ -9,19 +9,17 @@ class CacheDataSource(
     private val weatherDao: WeatherDao
 ): LocalDataSource {
     override fun upsertForecast(forecastEntity: ForecastEntity, daysEntity: List<DayEntity>) {
-        weatherDao.upsertForecast(forecastEntity)
+        val forecastId = weatherDao.upsertForecast(forecastEntity)
         daysEntity.forEach {
-            weatherDao.insertDay(it)
+            weatherDao.insertDay(it, forecastId.toInt())
         }
     }
 
-    override fun getForecast(): Pair<ForecastEntity?, List<DayEntity>> {
-        val forecast = weatherDao.getForecast()
-        val days = weatherDao.getDaysForForecast(forecast?.id ?: 1)
-        return Pair(forecast, days)
-    }
-
-    override fun deleteForecast(id: Int) {
-        weatherDao.deleteForecastById(id)
+    override fun getForecast(): Pair<ForecastEntity, List<DayEntity>>? {
+        weatherDao.getForecast()?.let {
+            val days = weatherDao.getDaysForForecast(it.id)
+            return Pair(it, days)
+        }
+        return null
     }
 }

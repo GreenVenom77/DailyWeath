@@ -29,16 +29,16 @@ class WeatherDao(private val dbHelper: DailyWeathDBHelper) {
         return newId
     }
 
-    fun insertDay(day: DayEntity): Long {
+    fun insertDay(day: DayEntity, forecastId: Int): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("datetime", day.datetime)
-            put("temp", day.tempe)
+            put("tempe", day.temp)
             put("conditions", day.conditions)
             put("icon", day.icon)
             put("humidity", day.humidity)
             put("wind_speed", day.windSpeed)
-            put("forecast_id", day.forecastId)
+            put("forecast_id", forecastId)
         }
         return db.insert("day", null, values)
     }
@@ -85,7 +85,7 @@ class WeatherDao(private val dbHelper: DailyWeathDBHelper) {
                 DayEntity(
                     id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                     datetime = cursor.getString(cursor.getColumnIndexOrThrow("datetime")),
-                    tempe = cursor.getDouble(cursor.getColumnIndexOrThrow("tempe")),
+                    temp = cursor.getDouble(cursor.getColumnIndexOrThrow("tempe")),
                     conditions = cursor.getString(cursor.getColumnIndexOrThrow("conditions")),
                     icon = cursor.getString(cursor.getColumnIndexOrThrow("icon")),
                     humidity = cursor.getDouble(cursor.getColumnIndexOrThrow("humidity")),
@@ -96,10 +96,5 @@ class WeatherDao(private val dbHelper: DailyWeathDBHelper) {
         }
         cursor.close()
         return days
-    }
-
-    fun deleteForecastById(id: Int) {
-        val db = dbHelper.writableDatabase
-        db.delete("forecast", "id = ?", arrayOf(id.toString()))
     }
 }

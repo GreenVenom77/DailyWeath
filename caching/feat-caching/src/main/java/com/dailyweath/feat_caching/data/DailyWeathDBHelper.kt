@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper
 class DailyWeathDBHelper(context: Context): SQLiteOpenHelper(
     context, "dailyweath.db", null, 1
 ) {
-    override fun onCreate(db: SQLiteDatabase?) {
+    override fun onConfigure(db: SQLiteDatabase?) {
+        super.onConfigure(db)
         db?.setForeignKeyConstraintsEnabled(true)
-
+    }
+    override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("""
             CREATE TABLE forecast (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,5 +1,6 @@
 package com.dailyweath.core_weather.data.dto.response
 
+import com.dailyweath.core_weather.domain.model.Forecast
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -12,7 +13,16 @@ data class ForecastResponse(
     val timezone: String = "",
     val tzoffset: Double = 0.0,
     val days: List<DayResponse> = listOf()
-)
+) {
+    fun extractForecast(): Forecast {
+        return Forecast(
+            address = address,
+            timeZone = timezone,
+            tzOffset = tzoffset,
+            days = days.map { it.extractDay() }
+        )
+    }
+}
 
 fun String.toForecastResponse(): ForecastResponse {
     val json = JSONObject(this)

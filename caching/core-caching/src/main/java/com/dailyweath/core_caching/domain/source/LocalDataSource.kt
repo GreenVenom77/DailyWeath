@@ -9,7 +9,5 @@ interface LocalDataSource {
         daysEntity: List<DayEntity>
     )
 
-    fun getForecast(): Pair<ForecastEntity?, List<DayEntity>>?
-
-    fun deleteForecast(id: Int)
+    fun getForecast(): Pair<ForecastEntity, List<DayEntity>>?
 }

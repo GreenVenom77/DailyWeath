@@ -1,5 +1,6 @@
 package com.dailyweath.core_weather.data.dto.response
 
+import com.dailyweath.core_weather.domain.model.Day
 import org.json.JSONObject
 
 data class DayResponse(
@@ -38,7 +39,18 @@ data class DayResponse(
     val description: String = "",
     val icon: String = "",
     val source: String = "",
-)
+) {
+    fun extractDay(): Day {
+        return Day(
+            datetime = datetime,
+            temp = temp,
+            conditions = conditions,
+            icon = icon,
+            humidity = humidity,
+            windSpeed = windspeed
+        )
+    }
+}
 
 fun JSONObject.toDayResponse() = DayResponse(
     datetime = this.optString("datetime", ""),
