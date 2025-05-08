@@ -4,6 +4,7 @@ import com.dailyweath.core_weather.domain.model.Day
 import java.text.DecimalFormat
 
 data class DayUI(
+    val id: Int,
     val datetime: String,
     val temp: String,
     val conditions: String,
@@ -15,7 +16,8 @@ data class DayUI(
 fun Day.toUI(): DayUI {
     val decimalFormat = DecimalFormat("#.#")
     return DayUI(
-        datetime = datetime,
+        id = id,
+        datetime = formatDateTime(),
         temp = "${decimalFormat.format(temp)}°C",
         conditions = conditions,
         icon = icon,

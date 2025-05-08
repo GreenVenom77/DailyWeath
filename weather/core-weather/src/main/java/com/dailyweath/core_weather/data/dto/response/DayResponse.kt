@@ -43,7 +43,7 @@ data class DayResponse(
     fun extractDay(): Day {
         return Day(
             datetime = datetime,
-            tempe = temp,
+            temp = temp,
             conditions = conditions,
             icon = icon,
             humidity = humidity,
