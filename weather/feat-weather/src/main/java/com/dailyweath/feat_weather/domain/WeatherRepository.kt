@@ -5,5 +5,8 @@ import com.greenvenom.core_network.data.NetworkError
 import com.greenvenom.core_network.data.NetworkResult
 
 interface WeatherRepository {
-    fun fetchForecasts(location: String, isRefresh: Boolean): NetworkResult<Forecast, NetworkError>
+    fun fetchForecasts(
+        location: String,
+        isRefresh: Boolean
+    ): NetworkResult<Forecast, NetworkError>
 }
