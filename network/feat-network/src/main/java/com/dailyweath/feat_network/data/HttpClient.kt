@@ -9,7 +9,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class HttpClient {
-    fun get(fullUrl: String, connectionTimeout: Long = 5000, readTimeout: Long = 5000): HttpResponse {
+    fun get(fullUrl: String, connectionTimeout: Int = 5000, readTimeout: Int = 5000): HttpResponse {
         var connection: HttpURLConnection? = null
         try {
             connection = createConnection(fullUrl, "GET", connectionTimeout, readTimeout)
@@ -36,13 +36,13 @@ class HttpClient {
     private fun createConnection(
         url: String,
         method: String,
-        connectionTimeout: Long,
-        readTimeout: Long
+        connectionTimeout: Int,
+        readTimeout: Int
     ): HttpURLConnection {
         val connection = URL(url).openConnection() as HttpURLConnection
         connection.requestMethod = method
-        connection.connectTimeout = 5000
-        connection.readTimeout = 5000
+        connection.connectTimeout = connectionTimeout
+        connection.readTimeout = readTimeout
 
         return connection
     }

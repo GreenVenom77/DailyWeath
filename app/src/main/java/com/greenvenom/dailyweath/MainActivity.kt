@@ -1,10 +1,14 @@
 package com.greenvenom.dailyweath
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -43,6 +47,16 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 100) {
             if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 viewModel.requestFetchPermission(this)
+            } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, ACCESS_FINE_LOCATION)) {
+                AlertDialog.Builder(this)
+                    .setTitle("Location permission required")
+                    .setMessage("This app requires location permission to get your current location and show you the forecast for your area.")
+                    .setPositiveButton("Settings") { _, _ ->
+                        val intent = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = android.net.Uri.fromParts("package", packageName, null)
+                        startActivity(Intent(intent, uri))
+                    }
+                    .show()
             } else {
                 Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
             }
