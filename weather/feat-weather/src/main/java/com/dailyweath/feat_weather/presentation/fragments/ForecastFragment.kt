@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.dailyweath.feat_weather.R
 import com.dailyweath.feat_weather.presentation.fragments.state.ForecastUiState
 import com.dailyweath.feat_weather.presentation.models.DayUI
@@ -23,6 +24,7 @@ class ForecastFragment : Fragment() {
     private var dayTimestamp: Long = 1
     private val sharedViewModel: WeatherViewModel by activityViewModels()
 
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var loadingOverlay: View
     private lateinit var dateText: TextView
     private lateinit var detailIcon: ImageView
@@ -51,9 +53,13 @@ class ForecastFragment : Fragment() {
 
         initViews(view)
         observeViewModel()
+        swipeRefreshLayout.setOnRefreshListener {
+            sharedViewModel.refreshCurrentForecast()
+        }
     }
 
     private fun initViews(view: View) {
+        swipeRefreshLayout = view.findViewById(R.id.detailsRefreshLayout)
         loadingOverlay = view.findViewById(R.id.loadingOverlay)
         dateText = view.findViewById(R.id.dateText)
         detailIcon = view.findViewById(R.id.detailIcon)
@@ -70,9 +76,13 @@ class ForecastFragment : Fragment() {
                 is ForecastUiState.Success -> {
                     sharedViewModel.getDayByTimestamp(dayTimestamp)?.let {
                         showForecast(it.toUI())
-                    } //?: run { showError() }
+                    }
+                    swipeRefreshLayout.isRefreshing = false
                 }
-                is ForecastUiState.Error -> showError(getString(state.errorType.resId))
+                is ForecastUiState.Error -> {
+                    swipeRefreshLayout.isRefreshing = false
+                    showError(getString(state.errorType.resId))
+                }
             }
         }
     }
