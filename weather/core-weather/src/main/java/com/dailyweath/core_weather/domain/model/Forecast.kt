@@ -17,8 +17,4 @@ data class Forecast(
             tzOffset = tzOffset
         )
     }
-
-    fun extractDays(): List<Day> {
-        return days
-    }
 }

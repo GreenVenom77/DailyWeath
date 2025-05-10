@@ -1,18 +1,14 @@
 package com.dailyweath.feat_weather.presentation.viewmodel
 
 import android.app.Activity
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.dailyweath.core_weather.domain.model.Day
 import com.dailyweath.feat_weather.domain.WeatherRepository
 import com.dailyweath.feat_weather.presentation.fragments.state.ForecastUiState
 import com.dailyweath.feat_weather.utils.LocationHandler
 import com.greenvenom.core_network.data.NetworkResult
-import com.greenvenom.core_network.utils.toString
-import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -41,8 +37,8 @@ class WeatherViewModel(
 
     fun getDayByTimestamp(timestamp: Long): Day? {
         // TODO: Better UI State handling with new state
-        val forecast = _forecastState.value as? ForecastUiState.Success
-        return forecast?.forecast?.days?.firstOrNull{ it.timestamp == timestamp }
+        val forecastState = _forecastState.value as? ForecastUiState.Success
+        return forecastState?.forecast?.days?.firstOrNull{ it.timestamp == timestamp }
     }
 
     private fun fetchForecastForLocation(location: String, isRefresh: Boolean = false) {
