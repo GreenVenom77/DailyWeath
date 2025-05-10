@@ -22,7 +22,7 @@ class WeatherRepositoryImpl(
             NetworkResult.Success(it)
         } ?: run {
             val startDate = LocalDate.now().format(DateTimeFormatter.ISO_DATE)
-            val endDate = LocalDate.now().plusDays(4).format(DateTimeFormatter.ISO_DATE)
+            val endDate = LocalDate.now().plusDays(5).format(DateTimeFormatter.ISO_DATE)
             remoteDataSource.fetchForecast(
                 pathParams = listOf(location, startDate, endDate),
                 queryParams = mapOf("unitGroup" to "metric")
