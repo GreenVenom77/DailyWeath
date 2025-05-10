@@ -9,18 +9,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.dailyweath.feat_weather.R
 import com.dailyweath.feat_weather.presentation.fragments.state.ForecastUiState
 import com.dailyweath.feat_weather.presentation.models.DayUI
 import com.dailyweath.feat_weather.presentation.models.toUI
 import com.dailyweath.feat_weather.presentation.utils.getWeatherIconRes
 import com.dailyweath.feat_weather.presentation.viewmodel.WeatherViewModel
-import com.dailyweath.feat_weather.presentation.viewmodel.WeatherViewModelFactory
 
 class ForecastFragment : Fragment() {
+    companion object {
+        const val DAY_ID_KEY = "dayId"
+    }
     private var dayId: Int = 1
     private val sharedViewModel: WeatherViewModel by activityViewModels()
 
@@ -35,7 +34,7 @@ class ForecastFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            dayId = it.getInt("dayId", 1)
+            dayId = it.getInt(DAY_ID_KEY, 1)
         }
     }
 
@@ -68,18 +67,12 @@ class ForecastFragment : Fragment() {
         sharedViewModel.forecastState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ForecastUiState.Loading -> showLoading()
-                is ForecastUiState.Success -> showForecast(
-                    state.forecast.days.find { it.id == dayId }?.toUI() ?: DayUI(
-                        id = dayId,
-                        datetime = "",
-                        temp = "",
-                        conditions = "",
-                        humidity = "",
-                        windSpeed = "",
-                        icon = ""
-                    )
-                )
-                is ForecastUiState.Error -> showError(state.message)
+                is ForecastUiState.Success -> {
+                    sharedViewModel.getDayById(dayId)?.let {
+                        showForecast(it.toUI())
+                    } //?: run { showError() }
+                }
+                is ForecastUiState.Error -> showError(getString(state.errorType.resId))
             }
         }
     }
