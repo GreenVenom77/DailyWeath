@@ -13,8 +13,6 @@ import com.dailyweath.feat_weather.utils.LocationHandler
 import com.greenvenom.core_network.domain.source.RemoteDataSource
 
 class DailyWeathApplication : Application() {
-    lateinit var remoteDataSource: RemoteDataSource
-    lateinit var localDataSource: LocalDataSource
     lateinit var repository: WeatherRepository
     lateinit var locationHandler: LocationHandler
 
@@ -24,8 +22,8 @@ class DailyWeathApplication : Application() {
     }
 
     private fun initializeDependencies() {
-        remoteDataSource = VisualCrossingDataSource(HttpClient())
-        localDataSource = CacheDataSource(WeatherDao(DailyWeathDBHelper(this)))
+        val remoteDataSource = VisualCrossingDataSource(HttpClient())
+        val localDataSource = CacheDataSource(WeatherDao(DailyWeathDBHelper(this)))
         repository = WeatherRepositoryImpl(remoteDataSource, localDataSource)
         locationHandler = LocationHandler(this)
     }

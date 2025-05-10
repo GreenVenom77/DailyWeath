@@ -9,10 +9,10 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class HttpClient {
-    fun get(fullUrl: String): HttpResponse {
+    fun get(fullUrl: String, connectionTimeout: Int = 5000, readTimeout: Int = 5000): HttpResponse {
         var connection: HttpURLConnection? = null
         try {
-            connection = createConnection(fullUrl, "GET")
+            connection = createConnection(fullUrl, "GET", connectionTimeout, readTimeout)
             val responseCode = connection.responseCode
             val responseBody = if (responseCode < 400) {
                 readStream(connection.inputStream)
@@ -20,8 +20,6 @@ class HttpClient {
                 readStream(connection.errorStream) ?: ""
             }
             return HttpResponse(responseCode, responseBody ?: "")
-        } catch (e: Exception) {
-            return HttpResponse(500, "Error: ${e.message}")
         } finally {
             connection?.disconnect()
         }
@@ -35,11 +33,16 @@ class HttpClient {
         }
     }
 
-    private fun createConnection(url: String, method: String): HttpURLConnection {
+    private fun createConnection(
+        url: String,
+        method: String,
+        connectionTimeout: Int,
+        readTimeout: Int
+    ): HttpURLConnection {
         val connection = URL(url).openConnection() as HttpURLConnection
         connection.requestMethod = method
-        connection.connectTimeout = 15000
-        connection.readTimeout = 15000
+        connection.connectTimeout = connectionTimeout
+        connection.readTimeout = readTimeout
 
         return connection
     }

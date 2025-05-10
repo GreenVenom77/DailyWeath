@@ -40,7 +40,7 @@ class DaysFragment : Fragment() {
         initViews(view)
         observeViewModel()
         swipeRefreshLayout.setOnRefreshListener {
-            sharedViewModel.refreshCurrentForecast(requireContext())
+            sharedViewModel.refreshCurrentForecast()
         }
     }
 
@@ -58,7 +58,7 @@ class DaysFragment : Fragment() {
             when (state) {
                 is ForecastUiState.Loading -> showLoading()
                 is ForecastUiState.Success -> showForecast(state.forecast)
-                is ForecastUiState.Error -> showError(state.message)
+                is ForecastUiState.Error -> showError(getString(state.errorType.resId))
             }
         }
     }
@@ -68,8 +68,8 @@ class DaysFragment : Fragment() {
     }
 
     private fun showForecast(forecast: Forecast) {
-        recyclerView.adapter = DayAdapter(forecast.days.map { it.toUI() }) { selectedDayId ->
-            val bundle = Bundle().apply { putInt("dayId", selectedDayId) }
+        recyclerView.adapter = DayAdapter(forecast.days.map { it.toUI() }) { timestamp ->
+            val bundle = Bundle().apply { putLong(ForecastFragment.DAY_TIMESTAMP_KEY, timestamp) }
             view?.findNavController()?.navigate(R.id.action_daysFragment_to_forecastFragment, bundle)
         }
         locationText.text = forecast.toUI(requireContext()).areaDetails

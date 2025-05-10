@@ -32,6 +32,8 @@ private fun buildQueryString(params: Map<String, String>): String {
 
         if (BuildConfig.API_KEY.isNotEmpty() && BuildConfig.API_KEY.isNotBlank()) {
             put("key", BuildConfig.API_KEY)
+        } else {
+            throw IllegalStateException("API_KEY is empty or blank")
         }
     }
 

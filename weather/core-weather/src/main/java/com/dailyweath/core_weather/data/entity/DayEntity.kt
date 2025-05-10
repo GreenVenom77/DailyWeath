@@ -5,6 +5,7 @@ import com.dailyweath.core_weather.domain.model.Day
 data class DayEntity(
     val id: Int = 0,
     val datetime: String,
+    val timestamp: Long,
     val temp: Double,
     val conditions: String,
     val icon: String,
@@ -16,6 +17,7 @@ data class DayEntity(
         return Day(
             id = id,
             datetime = datetime,
+            timestamp = timestamp,
             temp = temp,
             conditions = conditions,
             icon = icon,

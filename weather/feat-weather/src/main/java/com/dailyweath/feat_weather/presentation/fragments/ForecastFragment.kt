@@ -9,8 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.dailyweath.feat_weather.R
 import com.dailyweath.feat_weather.presentation.fragments.state.ForecastUiState
@@ -18,12 +16,15 @@ import com.dailyweath.feat_weather.presentation.models.DayUI
 import com.dailyweath.feat_weather.presentation.models.toUI
 import com.dailyweath.feat_weather.presentation.utils.getWeatherIconRes
 import com.dailyweath.feat_weather.presentation.viewmodel.WeatherViewModel
-import com.dailyweath.feat_weather.presentation.viewmodel.WeatherViewModelFactory
 
 class ForecastFragment : Fragment() {
-    private var dayId: Int = 1
+    companion object {
+        const val DAY_TIMESTAMP_KEY = "day_timestamp"
+    }
+    private var dayTimestamp: Long = 1
     private val sharedViewModel: WeatherViewModel by activityViewModels()
 
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var loadingOverlay: View
     private lateinit var dateText: TextView
     private lateinit var detailIcon: ImageView
@@ -35,7 +36,7 @@ class ForecastFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            dayId = it.getInt("dayId", 1)
+            dayTimestamp = it.getLong(DAY_TIMESTAMP_KEY, 1)
         }
     }
 
@@ -52,9 +53,13 @@ class ForecastFragment : Fragment() {
 
         initViews(view)
         observeViewModel()
+        swipeRefreshLayout.setOnRefreshListener {
+            sharedViewModel.refreshCurrentForecast()
+        }
     }
 
     private fun initViews(view: View) {
+        swipeRefreshLayout = view.findViewById(R.id.detailsRefreshLayout)
         loadingOverlay = view.findViewById(R.id.loadingOverlay)
         dateText = view.findViewById(R.id.dateText)
         detailIcon = view.findViewById(R.id.detailIcon)
@@ -68,18 +73,16 @@ class ForecastFragment : Fragment() {
         sharedViewModel.forecastState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ForecastUiState.Loading -> showLoading()
-                is ForecastUiState.Success -> showForecast(
-                    state.forecast.days.find { it.id == dayId }?.toUI() ?: DayUI(
-                        id = dayId,
-                        datetime = "",
-                        temp = "",
-                        conditions = "",
-                        humidity = "",
-                        windSpeed = "",
-                        icon = ""
-                    )
-                )
-                is ForecastUiState.Error -> showError(state.message)
+                is ForecastUiState.Success -> {
+                    sharedViewModel.getDayByTimestamp(dayTimestamp)?.let {
+                        showForecast(it.toUI())
+                    }
+                    swipeRefreshLayout.isRefreshing = false
+                }
+                is ForecastUiState.Error -> {
+                    swipeRefreshLayout.isRefreshing = false
+                    showError(getString(state.errorType.resId))
+                }
             }
         }
     }

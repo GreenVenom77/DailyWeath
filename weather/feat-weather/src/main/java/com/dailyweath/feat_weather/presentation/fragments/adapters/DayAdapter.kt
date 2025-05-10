@@ -12,7 +12,7 @@ import com.dailyweath.feat_weather.presentation.utils.getWeatherIconRes
 
 class DayAdapter(
     private val items: List<DayUI>,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Long) -> Unit
 ) : RecyclerView.Adapter<DayAdapter.DayViewHolder>() {
 
     inner class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -25,7 +25,7 @@ class DayAdapter(
             tempConditionsText.text = "${day.temp} - ${day.conditions}"
             iconImage.setImageResource(getWeatherIconRes(day.icon))
 
-            itemView.setOnClickListener { onItemClick(day.id) }
+            itemView.setOnClickListener { onItemClick(day.timestamp) }
         }
     }
 

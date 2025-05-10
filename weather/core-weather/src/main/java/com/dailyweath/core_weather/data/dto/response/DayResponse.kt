@@ -5,7 +5,7 @@ import org.json.JSONObject
 
 data class DayResponse(
     val datetime: String = "",
-    val datetimeEpoch: Int = 0,
+    val datetimeEpoch: Long = 0,
     val tempmax: Double = 0.0,
     val tempmin: Double = 0.0,
     val temp: Double = 0.0,
@@ -43,6 +43,7 @@ data class DayResponse(
     fun extractDay(): Day {
         return Day(
             datetime = datetime,
+            timestamp = datetimeEpoch,
             temp = temp,
             conditions = conditions,
             icon = icon,
@@ -54,7 +55,7 @@ data class DayResponse(
 
 fun JSONObject.toDayResponse() = DayResponse(
     datetime = this.optString("datetime", ""),
-    datetimeEpoch = this.optInt("datetimeEpoch", 0),
+    datetimeEpoch = this.optLong("datetimeEpoch", 0),
     tempmax = this.optDouble("tempmax", 0.0),
     tempmin = this.optDouble("tempmin", 0.0),
     temp = this.optDouble("temp", 0.0),
