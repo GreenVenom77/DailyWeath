@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter
 data class Day(
     val id: Int = 0,
     val datetime: String,
+    val timestamp: Long,
     val temp: Double,
     val conditions: String,
     val icon: String,
@@ -18,6 +19,7 @@ data class Day(
         return DayEntity(
             id = id,
             datetime = datetime,
+            timestamp = timestamp,
             temp = temp,
             conditions = conditions,
             icon = icon,

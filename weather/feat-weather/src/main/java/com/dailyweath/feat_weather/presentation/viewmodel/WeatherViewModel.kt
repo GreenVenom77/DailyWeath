@@ -39,10 +39,10 @@ class WeatherViewModel(
         locationHandler.requestLocationPermission(activity)
     }
 
-    fun getDayById(id: Int): Day? {
+    fun getDayByTimestamp(timestamp: Long): Day? {
         // TODO: Better UI State handling with new state
         val forecast = _forecastState.value as? ForecastUiState.Success
-        return forecast?.forecast?.days?.firstOrNull{ it.id == id }
+        return forecast?.forecast?.days?.firstOrNull{ it.timestamp == timestamp }
     }
 
     private fun fetchForecastForLocation(location: String, isRefresh: Boolean = false) {

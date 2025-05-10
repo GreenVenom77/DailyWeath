@@ -25,6 +25,7 @@ class DailyWeathDBHelper(context: Context): SQLiteOpenHelper(
             CREATE TABLE day (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 datetime TEXT NOT NULL,
+                timestamp INTEGER NOT NULL,
                 tempe REAL NOT NULL,
                 conditions TEXT NOT NULL,
                 icon TEXT NOT NULL,

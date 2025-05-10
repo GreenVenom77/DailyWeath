@@ -68,8 +68,8 @@ class DaysFragment : Fragment() {
     }
 
     private fun showForecast(forecast: Forecast) {
-        recyclerView.adapter = DayAdapter(forecast.days.map { it.toUI() }) { selectedDayId ->
-            val bundle = Bundle().apply { putInt(ForecastFragment.DAY_ID_KEY, selectedDayId) }
+        recyclerView.adapter = DayAdapter(forecast.days.map { it.toUI() }) { timestamp ->
+            val bundle = Bundle().apply { putLong(ForecastFragment.DAY_TIMESTAMP_KEY, timestamp) }
             view?.findNavController()?.navigate(R.id.action_daysFragment_to_forecastFragment, bundle)
         }
         locationText.text = forecast.toUI(requireContext()).areaDetails

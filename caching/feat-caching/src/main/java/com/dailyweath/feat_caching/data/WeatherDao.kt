@@ -33,6 +33,7 @@ class WeatherDao(private val dbHelper: DailyWeathDBHelper) {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("datetime", day.datetime)
+            put("timestamp", day.timestamp)
             put("tempe", day.temp)
             put("conditions", day.conditions)
             put("icon", day.icon)
@@ -77,7 +78,7 @@ class WeatherDao(private val dbHelper: DailyWeathDBHelper) {
             arrayOf(forecastId.toString()),
             null,
             null,
-            "datetime ASC"
+            "timestamp ASC"
         )
         val days = mutableListOf<DayEntity>()
         while (cursor.moveToNext()) {
@@ -85,6 +86,7 @@ class WeatherDao(private val dbHelper: DailyWeathDBHelper) {
                 DayEntity(
                     id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                     datetime = cursor.getString(cursor.getColumnIndexOrThrow("datetime")),
+                    timestamp = cursor.getLong(cursor.getColumnIndexOrThrow("timestamp")),
                     temp = cursor.getDouble(cursor.getColumnIndexOrThrow("tempe")),
                     conditions = cursor.getString(cursor.getColumnIndexOrThrow("conditions")),
                     icon = cursor.getString(cursor.getColumnIndexOrThrow("icon")),

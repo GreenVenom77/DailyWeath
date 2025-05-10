@@ -18,9 +18,9 @@ import com.dailyweath.feat_weather.presentation.viewmodel.WeatherViewModel
 
 class ForecastFragment : Fragment() {
     companion object {
-        const val DAY_ID_KEY = "dayId"
+        const val DAY_TIMESTAMP_KEY = "day_timestamp"
     }
-    private var dayId: Int = 1
+    private var dayTimestamp: Long = 1
     private val sharedViewModel: WeatherViewModel by activityViewModels()
 
     private lateinit var loadingOverlay: View
@@ -34,7 +34,7 @@ class ForecastFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            dayId = it.getInt(DAY_ID_KEY, 1)
+            dayTimestamp = it.getLong(DAY_TIMESTAMP_KEY, 1)
         }
     }
 
@@ -68,7 +68,7 @@ class ForecastFragment : Fragment() {
             when (state) {
                 is ForecastUiState.Loading -> showLoading()
                 is ForecastUiState.Success -> {
-                    sharedViewModel.getDayById(dayId)?.let {
+                    sharedViewModel.getDayByTimestamp(dayTimestamp)?.let {
                         showForecast(it.toUI())
                     } //?: run { showError() }
                 }

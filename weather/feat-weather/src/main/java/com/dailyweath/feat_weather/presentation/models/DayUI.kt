@@ -6,6 +6,7 @@ import java.text.DecimalFormat
 data class DayUI(
     val id: Int,
     val datetime: String,
+    val timestamp: Long,
     val temp: String,
     val conditions: String,
     val icon: String,
@@ -18,6 +19,7 @@ fun Day.toUI(): DayUI {
     return DayUI(
         id = id,
         datetime = formatDateTime(),
+        timestamp = timestamp,
         temp = "${decimalFormat.format(temp)}°C",
         conditions = conditions,
         icon = icon,

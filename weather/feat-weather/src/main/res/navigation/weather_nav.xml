@@ -20,8 +20,8 @@
         android:label="fragment_forecast"
         tools:layout="@layout/fragment_forecast" >
         <argument
-            android:name="dayId"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:name="dayTimestamp"
+            app:argType="long"
+            android:defaultValue="1L" />
     </fragment>
 </navigation>
