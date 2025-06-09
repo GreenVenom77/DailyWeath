@@ -4,7 +4,7 @@
 
 > ⚠️ This app was developed **without any third-party libraries** as required by the task.
 
-## 📱 Tech Stack
+## 📱 Tools & Architecture
 
 - **Kotlin**
 - **Android Views (XML)**
@@ -15,6 +15,12 @@
 - **JSON** parsing (no Kotlin Serialization)
 - **HttpURLConnection** with a custom lightweight HTTP client (inspired by Ktor)
 - **VisualCrossing Weather API**
+
+## 🌤 Features
+
+- Displays **today's weather forecast** and the forecast for the **next 5 days**
+- Caches data locally for offline access
+- Light and Dark mode support
 
 ## 📸 Screenshots
 
