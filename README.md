@@ -26,12 +26,12 @@
 
 ### 🌞 Light Mode
 
-| Home Screen | Details Screen |
+| Forecast Screen | Details Screen |
 |-------------|----------------|
 | ![Light Forecast](./.assets/Forecast-Light.png) | ![Light Details](./.assets/Details-Light.png) |
 
 ### 🌙 Dark Mode
 
-| Home Screen | Details Screen |
+| Forecast Screen | Details Screen |
 |-------------|----------------|
 | ![Dark Forecast](./.assets/Forecast-Dark.png) | ![Dark Details](./.assets/Details-Dark.png) |
