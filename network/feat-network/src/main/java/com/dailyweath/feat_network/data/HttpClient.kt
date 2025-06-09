@@ -5,8 +5,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class HttpClient {
     fun get(fullUrl: String, connectionTimeout: Int = 5000, readTimeout: Int = 5000): HttpResponse {

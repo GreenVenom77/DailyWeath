@@ -12,5 +12,4 @@
     <string name="error_no_internet">Please check your internet connection.</string>
     <string name="error_service_unavailable">The service is unavailable.</string>
     <string name="error_unknown">Unknown error happened.</string>
-    <string name="successful_request">The request was successful.</string>
 </resources>
